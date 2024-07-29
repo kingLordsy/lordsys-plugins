@@ -1,2 +1,2 @@
-# Example
-An example greeter plugin
+# Dimmer
+Dim the client based on current region.
