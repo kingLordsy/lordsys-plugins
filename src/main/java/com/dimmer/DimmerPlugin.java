@@ -211,25 +211,11 @@ public class DimmerPlugin extends Plugin {
 
         clickedRegionId = id;
 
-        System.out.println("regionId: " + id + ", contained: " + regions.contains(id));
-
     }
 
     public void removeRegion(MenuEntry menuEntry) {
 
         if (regions == null) return;
-
-
-
-        System.out.println("region: " + clickedRegionId);
-        System.out.println("removed: " + regions.remove(clickedRegionId));
-        System.out.println("regions: " + regionsToString());
-
-        for (Integer i : regions) {
-
-            System.out.println("r: " + i);
-
-        }
 
         config.setDimmerRegions(regionsToString());
 
@@ -238,16 +224,6 @@ public class DimmerPlugin extends Plugin {
     public void addRegion(MenuEntry menuEntry) {
 
         if (regions == null) return;
-
-        System.out.println("region: " + clickedRegionId);
-        System.out.println("added: " + regions.add(clickedRegionId));
-        System.out.println("regions: " + regionsToString());
-
-        for (Integer i : regions) {
-
-            System.out.println("r: " + i);
-
-        }
 
         config.setDimmerRegions(regionsToString());
 
