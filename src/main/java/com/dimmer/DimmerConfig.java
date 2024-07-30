@@ -3,6 +3,7 @@ package com.dimmer;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.Range;
 
 @ConfigGroup(DimmerConfig.GROUP)
 public interface DimmerConfig extends Config {
@@ -14,6 +15,10 @@ public interface DimmerConfig extends Config {
             keyName = "dimmerStrength",
             name = "Dimmer Strength",
             description = "Sets the strength of the dimmer."
+    )
+    @Range(
+            min = 0,
+            max = 255
     )
     default int dimmerStrength()
     {
