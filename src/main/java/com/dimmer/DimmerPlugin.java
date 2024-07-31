@@ -12,9 +12,11 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
+import net.runelite.client.util.Text;
 
 import javax.inject.Inject;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @PluginDescriptor(
         name = "Dimmer",
@@ -41,16 +43,16 @@ public class DimmerPlugin extends Plugin {
         return configManager.getConfig(DimmerConfig.class);
     }
 
-    public HashSet<Integer> regions;
+    public ArrayList<String> regions;
 
     public boolean dimmerEnabled;
 
-    public int clickedRegionId;
+    public String clickedRegionId;
 
     @Override
     public void startUp() {
 
-        regions = new HashSet<Integer>();
+        regions = new ArrayList<String>();
 
         fillRegions();
         evaluateEnabled();
@@ -71,29 +73,11 @@ public class DimmerPlugin extends Plugin {
 
         if (regions == null || regions.size() == 0) return "";
 
-//        if (regions.size() == 1) return regions.get(0).toString();
-
-        StringBuilder sb = new StringBuilder();
-
-        for (Integer i : regions) {
-
-            if (sb.length() > 0) {
-
-                sb.append(',');
-
-            }
-
-            sb.append(i.toString());
-
-        }
-
-        return sb.toString();
+        return Text.toCSV(regions);
 
     }
 
     public void fillRegions() {
-
-        if (regions == null) return;
 
         try {
 
@@ -101,20 +85,7 @@ public class DimmerPlugin extends Plugin {
 
             if (value.length() == 0) return;
 
-            if (!value.contains(",")) {
-
-                regions.add(Integer.valueOf(value));
-                return;
-
-            }
-
-            String[] split = value.split(",");
-
-            for (String s : split) {
-
-                regions.add(Integer.valueOf(s));
-
-            }
+            regions = new ArrayList<String>(Text.fromCSV(value));
 
         } catch (Exception e) {
 
@@ -170,7 +141,7 @@ public class DimmerPlugin extends Plugin {
 
             }
 
-            boolean isInRegion = regions.contains(wp.getRegionID());
+            boolean isInRegion = regions.contains(String.valueOf(wp.getRegionID()));
 
             if (config.dimmerWhitelist()) {
 
@@ -197,7 +168,7 @@ public class DimmerPlugin extends Plugin {
 
         if (regions == null || event.getType() != MenuAction.WALK.getId() || !client.isKeyPressed(KeyCode.KC_SHIFT)) return;
 
-        int id = client.getSelectedSceneTile().getWorldLocation().getRegionID();
+        String id = String.valueOf(client.getSelectedSceneTile().getWorldLocation().getRegionID());
 
         if (regions.contains(id)) {
 
