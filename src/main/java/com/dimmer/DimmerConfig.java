@@ -8,7 +8,7 @@ import net.runelite.client.config.Range;
 @ConfigGroup(DimmerConfig.GROUP)
 public interface DimmerConfig extends Config {
 
-    String GROUP = "npcindicators";
+    String GROUP = "dimmer";
 
     @ConfigItem(
             position = 1,

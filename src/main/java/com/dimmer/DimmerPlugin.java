@@ -217,6 +217,8 @@ public class DimmerPlugin extends Plugin {
 
         if (regions == null) return;
 
+        regions.remove(clickedRegionId);
+
         config.setDimmerRegions(regionsToString());
 
     }
@@ -224,6 +226,8 @@ public class DimmerPlugin extends Plugin {
     public void addRegion(MenuEntry menuEntry) {
 
         if (regions == null) return;
+
+        regions.add(clickedRegionId);
 
         config.setDimmerRegions(regionsToString());
 
