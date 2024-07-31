@@ -16,7 +16,6 @@ import net.runelite.client.util.Text;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.List;
 
 @PluginDescriptor(
         name = "Dimmer",
