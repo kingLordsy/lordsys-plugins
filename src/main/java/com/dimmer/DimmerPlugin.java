@@ -3,6 +3,7 @@ package com.dimmer;
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
+import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuEntryAdded;
@@ -137,7 +138,16 @@ public class DimmerPlugin extends Plugin {
 
             }
 
-            WorldPoint wp = player.getWorldLocation();
+            LocalPoint lp = player.getLocalLocation();
+
+            if (lp == null) {
+
+                dimmerEnabled = !config.dimmerWhitelist();
+                return;
+
+            }
+
+            WorldPoint wp = WorldPoint.fromLocalInstance(client, lp);
 
             if (wp == null) {
 
@@ -181,7 +191,15 @@ public class DimmerPlugin extends Plugin {
 
         }
 
-        String id = String.valueOf(WorldPoint.fromLocalInstance(client, selectedSceneTile.getLocalLocation()).getRegionID());
+        WorldPoint wp = WorldPoint.fromLocalInstance(client, selectedSceneTile.getLocalLocation());
+
+        if (wp == null) {
+
+            return;
+
+        }
+
+        String id = String.valueOf(wp.getRegionID());
 
         if (regions.contains(id)) {
 
