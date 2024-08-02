@@ -82,7 +82,13 @@ public class DimmerPlugin extends Plugin {
 
             String value = config.getDimmerRegions();
 
-            if (value.length() == 0) return;
+            if (value.length() == 0)  {
+
+                regions = new ArrayList<String>();
+
+                return;
+
+            }
 
             regions = new ArrayList<String>(Text.fromCSV(value));
 
@@ -167,7 +173,15 @@ public class DimmerPlugin extends Plugin {
 
         if (regions == null || event.getType() != MenuAction.WALK.getId() || !client.isKeyPressed(KeyCode.KC_SHIFT)) return;
 
-        String id = String.valueOf(client.getSelectedSceneTile().getWorldLocation().getRegionID());
+        Tile selectedSceneTile = client.getSelectedSceneTile();
+
+        if (selectedSceneTile == null) {
+
+            return;
+
+        }
+
+        String id = String.valueOf(WorldPoint.fromLocalInstance(client, selectedSceneTile.getLocalLocation()).getRegionID());
 
         if (regions.contains(id)) {
 
